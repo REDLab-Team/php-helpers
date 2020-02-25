@@ -1,0 +1,21 @@
+{
+    "name": "redlab/php-helpers",
+    "description": "Some helpers for PHP developments",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Jean-Baptiste Motto",
+            "email": "motto@redlab.io"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": "^7.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "Redlab\\Helpers\\": "src/"
+        }
+    }
+}
