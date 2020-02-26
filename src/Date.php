@@ -7,8 +7,8 @@ use \DateTime,
 
 /**
  * This class contains methods to convert and compare the dates in the application.
- * Class Date
- * @package Redlab\Helper
+ *
+ * @author Jean-Baptiste Motto <motto@redlab.io>
  */
 class Date
 {
