@@ -15,7 +15,13 @@
     },
     "autoload": {
         "psr-4": {
-            "Redlab\\Helpers\\": "src/"
-        }
+            "Redlab\\": "src"
+        },
+        "exclude-from-classmap": [
+            "src/Helper/Tests/"
+        ]
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9"
     }
 }
