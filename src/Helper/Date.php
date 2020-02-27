@@ -135,7 +135,7 @@ class Date
      */
     public static function isDateBefore(DateTime $dateToCompare, ?DateTime $dateEnd = null): bool
     {
-        return $dateToCompare > ($dateEnd ?? new DateTime());
+        return $dateToCompare < ($dateEnd ?? new DateTime());
     }
 
     /**
@@ -150,7 +150,7 @@ class Date
      */
     public static function isDateAfter(DateTime $dateToCompare, ?DateTime $dateStart = null): bool
     {
-        return $dateToCompare < ($dateStart ?? new DateTime());
+        return $dateToCompare > ($dateStart ?? new DateTime());
     }
 
     /**
