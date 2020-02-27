@@ -13,26 +13,121 @@ use \DateTime,
 class DateTest extends TestCase
 {
     /**
+     * @return array
+     *
      * @throws \Exception
      */
-    public function testIsDateInInterval()
+    public function getDatesToCompare()
     {
         $dateToCompare = new DateTime();
-        $startDate = clone $dateToCompare;
+        $dateBefore = clone $dateToCompare;
         // 10 days before the date to compare
-        $startDate->sub(new DateInterval('P10D'));
-        $endDate = clone $dateToCompare;
+        $dateBefore->sub(new DateInterval('P10D'));
+        $dateAfter = clone $dateToCompare;
         // 10 days after the date to compare
-        $endDate->add(new DateInterval('P10D'));
+        $dateAfter->add(new DateInterval('P10D'));
 
-        $this->assertTrue(Date::isDateInInterval($dateToCompare, $startDate, $endDate));
-        $this->assertTrue(Date::isDateInInterval($dateToCompare, $startDate));
-        $this->assertTrue(Date::isDateInInterval($dateToCompare, null, $endDate));
+        return [
+            [$dateToCompare, $dateBefore, $dateAfter],
+            [$dateToCompare, $dateAfter, $dateBefore],
+            [$dateToCompare, $dateBefore, null],
+            [$dateToCompare, null, $dateBefore],
+            [$dateToCompare, null, null],
+            [null, null, null]
+        ];
+    }
 
-        $this->assertFalse(Date::isDateInInterval($dateToCompare, $endDate, $startDate));
-        $this->assertFalse(Date::isDateInInterval($dateToCompare, $endDate));
-        $this->assertFalse(Date::isDateInInterval($dateToCompare, null, $startDate));
+    /**
+     * @dataProvider getDatesToCompare
+     *
+     * @param $dateToCompare
+     * @param $startDate
+     * @param $endDate
+     *
+     * @throws \Exception
+     */
+    public function testIsDateInInterval($dateToCompare, $startDate, $endDate)
+    {
+        $this->assertIsBool(Date::isDateInInterval($dateToCompare, $startDate, $endDate));
+    }
 
-        $this->assertFalse(Date::isDateInInterval($dateToCompare));
+    /**
+     * @dataProvider getDatesToCompare
+     *
+     * @param $dateToCompare
+     * @param $endDate
+     *
+     * @throws \Exception
+     */
+    public function testIsDateBefore($dateToCompare, $endDate)
+    {
+        $this->assertIsBool(Date::isDateBefore($dateToCompare, $endDate));
+    }
+
+    /**
+     * @dataProvider getDatesToCompare
+     *
+     * @param $dateToCompare
+     * @param $startDate
+     *
+     * @throws \Exception
+     */
+    public function testIsDateAfter($dateToCompare, $startDate)
+    {
+        $this->assertIsBool(Date::isDateAfter($dateToCompare, $startDate));
+    }
+
+    /**
+     * @return array
+     *
+     * @throws \Exception
+     */
+    public function getSingleDates()
+    {
+        return [
+            [new DateTime('now')],
+            [new DateTime('2019-12-31')],
+            [new DateTime('2019-02-29')],
+            [new DateTime('1976-02-29')],
+            [new DateTime('542-06-24')],
+            [new DateTime('1926-02-16')],
+            [null]
+        ];
+    }
+
+    /**
+     * @dataProvider getSingleDates
+     *
+     * @param $dateToTest
+     *
+     * @throws \Exception
+     */
+    public function testCurrentDayOfYear($dateToTest)
+    {
+        $this->assertSame(Date::currentDayOfYear($dateToTest) + 1, Date::currentDayOfYear($dateToTest, true));
+    }
+
+    /**
+     * @dataProvider getSingleDates
+     *
+     * @param $dateToTest
+     *
+     * @throws \Exception
+     */
+    public function testIsWeekEnd($dateToTest)
+    {
+        $this->assertIsBool(Date::isWeekEnd($dateToTest));
+    }
+
+    /**
+     * @dataProvider getSingleDates
+     *
+     * @param $dateToTest
+     *
+     * @throws \Exception
+     */
+    public function testIsLeapYear($dateToTest)
+    {
+        $this->assertIsBool(Date::isLeapYear($dateToTest));
     }
 }
