@@ -107,12 +107,12 @@ class Date
      * @throws \Exception
      */
     public static function isDateInInterval(
-        DateTime $dateToCompare,
+        ?DateTime $dateToCompare,
         ?DateTime $startDate = null,
         ?DateTime $endDate = null
     ): bool
     {
-        if ($startDate === null && $endDate === null) {
+        if (($dateToCompare === null) || ($startDate === null && $endDate === null)) {
             return false;
         }
 
@@ -133,9 +133,9 @@ class Date
      * @return bool
      * @throws \Exception
      */
-    public static function isDateBefore(DateTime $dateToCompare, ?DateTime $dateEnd = null): bool
+    public static function isDateBefore(?DateTime $dateToCompare, ?DateTime $dateEnd = null): bool
     {
-        return $dateToCompare < ($dateEnd ?? new DateTime());
+        return $dateToCompare !== null && $dateToCompare < ($dateEnd ?? new DateTime());
     }
 
     /**
@@ -148,9 +148,9 @@ class Date
      * @return bool
      * @throws \Exception
      */
-    public static function isDateAfter(DateTime $dateToCompare, ?DateTime $dateStart = null): bool
+    public static function isDateAfter(?DateTime $dateToCompare, ?DateTime $dateStart = null): bool
     {
-        return $dateToCompare > ($dateStart ?? new DateTime());
+        return $dateToCompare !== null && $dateToCompare > ($dateStart ?? new DateTime());
     }
 
     /**
