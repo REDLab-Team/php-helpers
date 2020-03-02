@@ -2,6 +2,8 @@
 
 namespace Redlab\Exception;
 
+use Redlab\Helper\Arr;
+
 /**
  * Class JsonException
  *
@@ -41,6 +43,6 @@ class JsonException extends \Exception
             self::UNKNOWN_ERROR => 'Unknown JSON error'
         ];
 
-        return array_key_exists($code, $errors) ? $errors[$code] : $errors[self::UNKNOWN_ERROR];
+        return Arr::value($code, $errors, self::UNKNOWN_ERROR);
     }
 }
