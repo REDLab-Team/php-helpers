@@ -23,14 +23,15 @@ class Date
     /**
      * Get formated data from the current date
      *
+     * @param DateTime|null $dateTime
      * @param string $format
      *
      * @return string
      * @throws \Exception
      */
     public static function dateFromFormat(
-        ?DateTime $dateTime,
-        string $format
+        ?DateTime $dateTime = null,
+        string $format = self::STANDARD_DATETIME_FORMAT
     ): string
     {
         $dateTime = $dateTime ?? new DateTime();
@@ -49,7 +50,7 @@ class Date
      * @throws \Exception
      */
     public static function stringToDateTime(
-        ?string $stringDate,
+        ?string $stringDate = null,
         string $format = self::STANDARD_DATETIME_FORMAT,
         ?DateTimeZone $dateTimeZone = null
     ): ?DateTime
@@ -99,7 +100,7 @@ class Date
      * Check if the $dateToCompare parameter is between the start date and the end date.
      * If one of the two parameters is null then it will compare the $dateToCompare just with the one that is not null.
      *
-     * @param DateTime $dateToCompare
+     * @param DateTime|null $dateToCompare
      * @param DateTime|null $startDate
      * @param DateTime|null $endDate
      *
@@ -107,7 +108,7 @@ class Date
      * @throws \Exception
      */
     public static function isDateInInterval(
-        ?DateTime $dateToCompare,
+        ?DateTime $dateToCompare = null,
         ?DateTime $startDate = null,
         ?DateTime $endDate = null
     ): bool
@@ -127,13 +128,13 @@ class Date
      * Check if the $dateToCompare parameter is before the $dateEnd parameter.
      * If the $dateEnd parameter is null, then $dateToCompare will be compared with the current date.
      *
-     * @param DateTime $dateToCompare
+     * @param DateTime|null $dateToCompare
      * @param DateTime|null $dateEnd
      *
      * @return bool
      * @throws \Exception
      */
-    public static function isDateBefore(?DateTime $dateToCompare, ?DateTime $dateEnd = null): bool
+    public static function isDateBefore(?DateTime $dateToCompare = null, ?DateTime $dateEnd = null): bool
     {
         return $dateToCompare !== null && $dateToCompare < ($dateEnd ?? new DateTime());
     }
@@ -142,13 +143,13 @@ class Date
      * Check if the $dateToCompare parameter is after the $dateStart parameter.
      * If the $dateStart parameter is null, then $dateToCompare will be compared with the current date.
      *
-     * @param DateTime $dateToCompare
+     * @param DateTime|null $dateToCompare
      * @param DateTime|null $dateStart
      *
      * @return bool
      * @throws \Exception
      */
-    public static function isDateAfter(?DateTime $dateToCompare, ?DateTime $dateStart = null): bool
+    public static function isDateAfter(?DateTime $dateToCompare = null, ?DateTime $dateStart = null): bool
     {
         return $dateToCompare !== null && $dateToCompare > ($dateStart ?? new DateTime());
     }
