@@ -140,7 +140,31 @@ class Arr
     }
 
     /**
-     * Exchanges keyx with values in an array.
+     * Check if the $array parameter contains values
+     *
+     * @param array $array
+     *
+     * @return bool
+     */
+    public static function isEmpty(array $array): bool
+    {
+        return count($array) === 0;
+    }
+
+    /**
+     * Check if the $array parameter is an associative array
+     *
+     * @param array $array
+     *
+     * @return bool
+     */
+    public static function isAssoc(array $array): bool
+    {
+        return ! self::isEmpty(array_filter(self::keys($array), 'is_string'));
+    }
+
+    /**
+     * Exchanges keys with values in an array.
      * If the $sort parameter is true then the new array will be sorted.
      * The sort type depends of the recursive parameter.
      * If the sortByKeys parameter is true then the sort type will be done on the keys.
@@ -168,5 +192,33 @@ class Arr
             }
         }
         return array_flip($array);
+    }
+
+    /**
+     * Convert an associative array to an object.
+     *
+     * @param array $array
+     *
+     * @return \StdClass|null
+     */
+    public static function arrayToObject(array $array): ?\StdClass
+    {
+        $jsonHelper = new Json();
+
+        return self::isAssoc($array) ? $jsonHelper->decode($jsonHelper->encode($array), false) : null;
+    }
+
+    /**
+     * Convert an object to an associative array.
+     *
+     * @param object $object
+     *
+     * @return array
+     */
+    public static function objectToArray(object $object): array
+    {
+        $jsonHelper = new Json();
+
+        return $jsonHelper->decode($jsonHelper->encode($object), true);
     }
 }
