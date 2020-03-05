@@ -1,6 +1,6 @@
 <?php
 
-namespace Redlab\Helper;
+namespace RedlabTeam\Helper;
 
 use \DateTime,
     \DateTimeZone;

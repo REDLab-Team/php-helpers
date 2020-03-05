@@ -16,7 +16,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Redlab\\": "src"
+            "RedlabTeam\\": "src"
         },
         "exclude-from-classmap": [
             "src/Helper/Tests/"

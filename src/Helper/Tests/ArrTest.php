@@ -1,9 +1,9 @@
 <?php
 
-namespace Redlab\Helper\Test;
+namespace RedlabTeam\Helper\Test;
 
 use \PHPUnit\Framework\TestCase,
-    Redlab\Helper\Arr;
+    RedlabTeam\Helper\Arr;
 
 /**
  * @author Jean-Baptiste Motto <motto@redlab.io>
