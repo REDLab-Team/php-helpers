@@ -41,6 +41,8 @@ class JsonTest extends TestCase
     }
 
     /**
+     * TODO: Resolve the failure with it's a trap
+     *
      * @return array
      */
     public function getJsonToDecode()
