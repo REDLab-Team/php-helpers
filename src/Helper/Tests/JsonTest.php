@@ -1,9 +1,9 @@
 <?php
 
-namespace Redlab\Helper\Test;
+namespace RedlabTeam\Helper\Test;
 
 use \PHPUnit\Framework\TestCase,
-    Redlab\Helper\Json;
+    RedlabTeam\Helper\Json;
 
 /**
  * @author Jean-Baptiste Motto <motto@redlab.io>
@@ -41,6 +41,8 @@ class JsonTest extends TestCase
     }
 
     /**
+     * TODO: Resolve the failure with it's a trap
+     *
      * @return array
      */
     public function getJsonToDecode()

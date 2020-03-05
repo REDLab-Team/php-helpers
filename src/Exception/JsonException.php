@@ -1,8 +1,8 @@
 <?php
 
-namespace Redlab\Exception;
+namespace RedlabTeam\Exception;
 
-use Redlab\Helper\Arr;
+use RedlabTeam\Helper\Arr;
 
 /**
  * Class JsonException

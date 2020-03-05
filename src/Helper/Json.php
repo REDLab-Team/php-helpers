@@ -1,8 +1,6 @@
 <?php
 
-namespace Redlab\Helper;
-
-use Redlab\Exception\JsonException;
+namespace RedlabTeam\Helper;
 
 /**
  * This class contains methods to convert strings into json and reverse the dates in the application.

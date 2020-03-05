@@ -1,6 +1,6 @@
 <?php
 
-namespace Redlab\Helper;
+namespace RedlabTeam\Helper;
 
 /**
  * This class contains methods to manipulates arrays in the application.
