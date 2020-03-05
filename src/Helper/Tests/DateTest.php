@@ -1,11 +1,11 @@
 <?php
 
-namespace Redlab\Helper\Test;
+namespace RedlabTeam\Helper\Test;
 
 use \DateTime,
     \DateInterval,
     \PHPUnit\Framework\TestCase,
-    Redlab\Helper\Date;
+    RedlabTeam\Helper\Date;
 
 /**
  * @author Jean-Baptiste Motto <motto@redlab.io>
