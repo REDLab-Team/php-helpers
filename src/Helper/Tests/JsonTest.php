@@ -35,7 +35,7 @@ class JsonTest extends TestCase
     {
         $jsonHelper = new Json();
 
-        $jsonHelper->encode($dataToEncode);
+        $this->isJson($jsonHelper->encode($dataToEncode));
 
         $this->assertSame(0, $jsonHelper->getLastErrorCode());
     }
@@ -64,8 +64,13 @@ class JsonTest extends TestCase
     {
         $jsonHelper = new Json();
 
-        $jsonHelper->decode($jsonToDecode);
+        $newJson = $jsonHelper->decode($jsonToDecode);
 
-        $this->assertSame(0, $jsonHelper->getLastErrorCode());
+        if ($jsonHelper->getLastErrorCode() === 0) {
+            $this->assertSame(0, $jsonHelper->getLastErrorCode());
+            $this->assertNotEmpty($newJson);
+        } else {
+            $this->assertNull($newJson);
+        }
     }
 }
