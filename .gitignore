@@ -1,4 +1,2 @@
 /vendor/
 .idea
-./phpunit.xml
-./src/Helper/Tests/*.xml

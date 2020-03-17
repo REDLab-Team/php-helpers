@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit colors="true" verbose="true" bootstrap="vendor/autoload.php">
     <testsuites>
-        <testsuite name="Helper classes for PHP Developments">
-            <directory>./src/Helper/Tests/</directory>
+        <testsuite name="Arrays">
+            <file>./src/Helper/Tests/ArrTest.php</file>
+        </testsuite>
+        <testsuite name="Dates">
+            <file>./src/Helper/Tests/DateTest.php</file>
+        </testsuite>
+        <testsuite name="Json">
+            <file>./src/Helper/Tests/JsonTest.php</file>
         </testsuite>
     </testsuites>
     <filter>
