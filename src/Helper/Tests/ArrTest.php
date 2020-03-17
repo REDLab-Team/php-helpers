@@ -16,7 +16,8 @@ class ArrTest extends TestCase
     public function getAssocArraysToTest()
     {
         return [
-            [['father' => 'Robert', 'mother' => 'Simone', 'fother' => 'Huguette']]
+            [['father' => 'Robert', 'mother' => 'Simone', 'fother' => 'Huguette']],
+            [[]]
         ];
     }
 
@@ -28,27 +29,206 @@ class ArrTest extends TestCase
         return [
             [['Robert', 'Simone', 'Huguette']],
             [[1, 2, 3, 4, 5]],
-            [['It\'s a trap', ['yes', 'no', 'maybe']]]
+            [['It\'s a trap', ['yes', 'no', 'maybe']]],
+            [[]]
         ];
     }
 
     /**
+     * Test if the array is empty array or not.
+     *
      * @dataProvider getAssocArraysToTest
+     * @dataProvider getNumericallyIndexedArraysToTest
+     *
+     * @param array $arrayToTest
+     */
+    public function testIsEmpty(array $arrayToTest)
+    {
+        $this->assertIsBool(Arr::isEmpty($arrayToTest));
+    }
+
+    /**
+     * Test if the array is an associative array or not.
+     *
+     * @dataProvider getAssocArraysToTest
+     * @dataProvider getNumericallyIndexedArraysToTest
      *
      * @param array $arrayToTest
      */
     public function testIsAssoc(array $arrayToTest)
     {
-        $this->assertTrue(Arr::isAssoc($arrayToTest));
+        $this->assertIsBool(Arr::isAssoc($arrayToTest));
     }
 
     /**
+     * Test if the first value and the first key of the array are returned.
+     * If the array is empty then it should return null.
+     *
+     * @dataProvider getAssocArraysToTest
      * @dataProvider getNumericallyIndexedArraysToTest
      *
      * @param array $arrayToTest
      */
-    public function testIsNotAssoc(array $arrayToTest)
+    public function testFirst(array $arrayToTest)
     {
-        $this->assertFalse(Arr::isAssoc($arrayToTest));
+        if (! Arr::isEmpty($arrayToTest)) {
+            // first value
+            $this->assertSame(Arr::first($arrayToTest), reset($arrayToTest));
+            // first key
+            $this->assertSame(Arr::first($arrayToTest, true), array_key_first($arrayToTest));
+        } else {
+            $this->assertNull(Arr::first($arrayToTest));
+            $this->assertNull(Arr::first($arrayToTest));
+        }
+    }
+
+    /**
+     * Test if the last value and the last key of the array are returned.
+     * If the array is empty then it should return null.
+     *
+     * @dataProvider getAssocArraysToTest
+     * @dataProvider getNumericallyIndexedArraysToTest
+     *
+     * @param array $arrayToTest
+     */
+    public function testLast(array $arrayToTest)
+    {
+        if (! Arr::isEmpty($arrayToTest)) {
+            // first value
+            $this->assertSame(Arr::last($arrayToTest), end($arrayToTest));
+            // first key
+            $this->assertSame(Arr::last($arrayToTest, true), array_key_last($arrayToTest));
+        } else {
+            $this->assertNull(Arr::last($arrayToTest));
+            $this->assertNull(Arr::last($arrayToTest));
+        }
+    }
+
+    /**
+     * Test if the array is sorted.
+     *
+     * @dataProvider getAssocArraysToTest
+     * @dataProvider getNumericallyIndexedArraysToTest
+     *
+     * @param array $arrayToTest
+     */
+    public function testSort(array $arrayToTest)
+    {
+        $this->assertTrue(Arr::sort($arrayToTest));
+        $this->assertTrue(Arr::sort($arrayToTest, true));
+    }
+
+    /**
+     * Test if the value is added at the beginning or at the end of the array.
+     *
+     * @dataProvider getAssocArraysToTest
+     * @dataProvider getNumericallyIndexedArraysToTest
+     *
+     * @param array $arrayToTest
+     */
+    public function testAdd(array $arrayToTest)
+    {
+        $valueToAdd =  'Value to Add';
+        $valueToAdd2 = 'Value to Add 2';
+
+        $this->assertIsInt(Arr::add($arrayToTest, $valueToAdd));
+        $this->assertSame(Arr::first($arrayToTest), $valueToAdd);
+
+        $this->assertIsInt(Arr::add($arrayToTest, $valueToAdd2, false));
+        $this->assertSame(Arr::last($arrayToTest), $valueToAdd2);
+    }
+
+    /**
+     * Test if the value exists into the array.
+     *
+     * @dataProvider getAssocArraysToTest
+     * @dataProvider getNumericallyIndexedArraysToTest
+     *
+     * @param array $arrayToTest
+     */
+    public function testExists(array $arrayToTest)
+    {
+        $valueToTest =  'Value to test';
+
+        $this->assertIsBool(Arr::exists($valueToTest, $arrayToTest));
+        $this->assertIsBool(Arr::exists($valueToTest, $arrayToTest, true));
+    }
+
+    /**
+     * Test if the key exists into the array.
+     *
+     * @dataProvider getAssocArraysToTest
+     * @dataProvider getNumericallyIndexedArraysToTest
+     *
+     * @param array $arrayToTest
+     */
+    public function testKeyExists(array $arrayToTest)
+    {
+        $keyToTest  = 0;
+        $keyToTest2 = 'KeyToTest';
+
+        $this->assertIsBool(Arr::keyExists($keyToTest, $arrayToTest));
+        $this->assertIsBool(Arr::keyExists($keyToTest, $arrayToTest, true));
+        $this->assertIsBool(Arr::keyExists($keyToTest2, $arrayToTest));
+        $this->assertIsBool(Arr::keyExists($keyToTest2, $arrayToTest, true));
+    }
+
+    /**
+     * Return the keys of the $arrayToTest as an indexed array.
+     *
+     * @dataProvider getAssocArraysToTest
+     * @dataProvider getNumericallyIndexedArraysToTest
+     *
+     * @param array $arrayToTest
+     */
+    public function testGetKeys(array $arrayToTest)
+    {
+        $searchValues = 0;
+        $this->assertIsArray(Arr::keys($arrayToTest));
+        $this->assertIsArray(Arr::keys($arrayToTest, $searchValues));
+        $this->assertIsArray(Arr::keys($arrayToTest, $searchValues, true));
+        $this->assertIsArray(Arr::keys($arrayToTest, null, true));
+    }
+
+    /**
+     * Return the values of the $arrayToTest as an indexed array.
+     *
+     * @dataProvider getAssocArraysToTest
+     * @dataProvider getNumericallyIndexedArraysToTest
+     *
+     * @param array $arrayToTest
+     */
+    public function testGetValues(array $arrayToTest)
+    {
+        $this->assertIsArray(Arr::values($arrayToTest));
+        $this->assertIsArray(Arr::toNumIndexed($arrayToTest));
+    }
+
+    /**
+     * Test if the array is flip.
+     *
+     * @dataProvider getAssocArraysToTest
+     * @dataProvider getNumericallyIndexedArraysToTest
+     *
+     * @param array $arrayToTest
+     */
+    public function testFlip(array $arrayToTest)
+    {
+        $flippedArray = Arr::flip($arrayToTest);
+        $this->assertIsArray($flippedArray);
+        $this->assertSame(Arr::keys($arrayToTest), Arr::values($flippedArray));
+    }
+
+    /**
+     * Test if the array is flip.
+     *
+     * @dataProvider getAssocArraysToTest
+     * @dataProvider getNumericallyIndexedArraysToTest
+     *
+     * @param array $arrayToTest
+     */
+    public function testToObject(array $arrayToTest)
+    {
+        $this->assertIsObject(Arr::arrayToObject($arrayToTest));
     }
 }
