@@ -52,6 +52,37 @@ class Arr
     }
 
     /**
+     * @param array $array
+     * @param string $property
+     * @param bool $reverse
+     * @param int $sortFlag
+     *
+     * @return array
+     */
+    public static function sortObjectsArrayByAttribute(
+        array $array,
+        string $property,
+        bool $reverse = false,
+        int $sortFlag = SORT_REGULAR
+    ): array
+    {
+        $returnArray = [];
+        foreach ($array as $object) {
+            if (is_object($object)) {
+                if (property_exists($object, $property) && Str::isAlphaNumeric($object->{$property})) {
+                    $returnArray[$object->{$property}] = $object;
+                } elseif (method_exists($object, $property) && Str::isAlphaNumeric($object->$property())) {
+                    $returnArray[$object->$property()] = $object;
+                }
+            }
+        }
+
+        self::sort($returnArray, $reverse, $sortFlag);
+
+        return $returnArray;
+    }
+
+    /**
      * Add a value to the beginning of an array.
      * If the beginning parameter is false, the value will be add at the end of the array.
      *
@@ -77,15 +108,15 @@ class Arr
      * Check if the value exists into the array parameter.
      * The strict parameter checks the type of the variable
      *
-     * @param $key
+     * @param $value
      * @param array $array
      * @param $strict
      *
      * @return bool
      */
-    public static function exists($key, array $array, $strict = false): bool
+    public static function exists($value, array $array, $strict = false): bool
     {
-        return in_array($key, $array, $strict);
+        return in_array($value, $array, $strict);
     }
 
     /**
