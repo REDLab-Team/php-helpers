@@ -3,6 +3,7 @@
 namespace RedlabTeam\Helper\Test;
 
 use \PHPUnit\Framework\TestCase,
+    \StdClass,
     RedlabTeam\Helper\Arr;
 
 /**
@@ -31,6 +32,22 @@ class ArrTest extends TestCase
             [[1, 2, 3, 4, 5]],
             [['It\'s a trap', ['yes', 'no', 'maybe']]],
             [[]]
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    public function getObjectsArraysToTest()
+    {
+        $object1 = new StdClass();
+        $object1->robert = 2;
+        $object1->simone = 5;
+        $object2 = clone $object1;
+        $object2->robert = 1;
+
+        return [
+            [[$object1, $object2]]
         ];
     }
 
@@ -230,5 +247,36 @@ class ArrTest extends TestCase
     public function testToObject(array $arrayToTest)
     {
         $this->assertIsObject(Arr::arrayToObject($arrayToTest));
+    }
+
+    /**
+     * Test if the array of objects can be sorted.
+     *
+     * @dataProvider getAssocArraysToTest
+     * @dataProvider getNumericallyIndexedArraysToTest
+     * @dataProvider getObjectsArraysToTest
+     *
+     * @param array $arrayToTest
+     */
+    public function testObjectArrays(array $arrayToTest)
+    {
+        $this->assertIsArray(Arr::sortObjectsArrayByAttribute($arrayToTest, 'robert'));
+        $this->assertIsArray(Arr::sortObjectsArrayByAttribute($arrayToTest, 'robert', true));
+        $this->assertIsArray(Arr::sortObjectsArrayByAttribute($arrayToTest, 'simone'));
+        $this->assertIsArray(Arr::sortObjectsArrayByAttribute($arrayToTest, 'simone', true));
+    }
+
+    /**
+     * Test if the objects can be convert to array.
+     *
+     * @dataProvider getObjectsArraysToTest
+     *
+     * @param array $arrayToTest
+     */
+    public function testObjectToArray(array $arrayToTest)
+    {
+        foreach ($arrayToTest as $object) {
+            $this->assertIsArray(Arr::objectToArray($object));
+        }
     }
 }
