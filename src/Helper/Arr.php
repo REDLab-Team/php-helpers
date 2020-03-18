@@ -108,15 +108,15 @@ class Arr
      * Check if the value exists into the array parameter.
      * The strict parameter checks the type of the variable
      *
-     * @param $key
+     * @param $value
      * @param array $array
      * @param $strict
      *
      * @return bool
      */
-    public static function exists($key, array $array, $strict = false): bool
+    public static function exists($value, array $array, $strict = false): bool
     {
-        return in_array($key, $array, $strict);
+        return in_array($value, $array, $strict);
     }
 
     /**
