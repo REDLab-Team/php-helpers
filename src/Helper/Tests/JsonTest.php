@@ -35,14 +35,12 @@ class JsonTest extends TestCase
     {
         $jsonHelper = new Json();
 
-        $this->isJson($jsonHelper->encode($dataToEncode));
+        $jsonHelper->encode($dataToEncode);
 
         $this->assertSame(0, $jsonHelper->getLastErrorCode());
     }
 
     /**
-     * TODO: Resolve the failure with it's a trap
-     *
      * @return array
      */
     public function getJsonToDecode()
