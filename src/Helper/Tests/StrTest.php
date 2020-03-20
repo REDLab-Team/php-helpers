@@ -52,7 +52,9 @@ class StrTest extends TestCase
      */
     public function testIsAlphaNumeric($dataToTest)
     {
-        $this->assertIsBool(Str::isAlphaNumeric($dataToTest));
+        $stringHelper = new Str();
+
+        $this->assertIsBool($stringHelper->isAlphaNumeric($dataToTest));
     }
 
     /**
@@ -62,6 +64,8 @@ class StrTest extends TestCase
      */
     public function testIsBool($dataToTest)
     {
-        $this->assertIsBool(Str::isBool($dataToTest));
+        $stringHelper = new Str();
+
+        $this->assertIsBool($stringHelper->isBool($dataToTest));
     }
 }

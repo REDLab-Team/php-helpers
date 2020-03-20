@@ -19,9 +19,9 @@ class Arr
      *
      * @return int|mixed|string|null
      */
-    public static function first(array $array, bool $key = false)
+    public function first(array $array, bool $key = false)
     {
-        return self::isEmpty($array) ? null : ($key === false ? reset($array) : array_key_first($array));
+        return $this->isEmpty($array) ? null : ($key === false ? reset($array) : array_key_first($array));
     }
 
     /**
@@ -32,9 +32,9 @@ class Arr
      *
      * @return int|mixed|string|null
      */
-    public static function last(array $array, bool $key = false)
+    public function last(array $array, bool $key = false)
     {
-        return self::isEmpty($array) ? null : ($key === false ? end($array) : array_key_last($array));
+        return $this->isEmpty($array) ? null : ($key === false ? end($array) : array_key_last($array));
     }
 
     /**
@@ -46,7 +46,7 @@ class Arr
      *
      * @return bool
      */
-    public static function sort(array &$array, bool $reverse = false, int $sortFlag = SORT_REGULAR): bool
+    public function sort(array &$array, bool $reverse = false, int $sortFlag = SORT_REGULAR): bool
     {
         return $reverse === false ? sort($array, $sortFlag) : rsort($array, $sortFlag);
     }
@@ -59,7 +59,7 @@ class Arr
      *
      * @return array
      */
-    public static function sortObjectsArrayByAttribute(
+    public function sortObjectsArrayByAttribute(
         array $array,
         string $property,
         bool $reverse = false,
@@ -68,16 +68,17 @@ class Arr
     {
         $returnArray = [];
         foreach ($array as $object) {
-            if (is_object($object)) {
-                if (property_exists($object, $property) && Str::isAlphaNumeric($object->{$property})) {
+            if (\is_object($object)) {
+                $stringHelper = new Str();
+                if (\property_exists($object, $property) && $stringHelper->isAlphaNumeric($object->{$property})) {
                     $returnArray[$object->{$property}] = $object;
-                } elseif (method_exists($object, $property) && Str::isAlphaNumeric($object->$property())) {
+                } elseif (\method_exists($object, $property) && $stringHelper->isAlphaNumeric($object->$property())) {
                     $returnArray[$object->$property()] = $object;
                 }
             }
         }
 
-        self::sort($returnArray, $reverse, $sortFlag);
+        $this->sort($returnArray, $reverse, $sortFlag);
 
         return $returnArray;
     }
@@ -92,11 +93,11 @@ class Arr
      *
      * @return int
      */
-    public static function add(array &$array, $mixedValue, bool $beginning = true): int
+    public function add(array &$array, $mixedValue, bool $beginning = true): int
     {
-        if (is_array($mixedValue)) {
+        if (\is_array($mixedValue)) {
             foreach ($mixedValue as $value) {
-                self::add($array, $value, $beginning);
+                $this->add($array, $value, $beginning);
             }
             return count($array);
         } else {
@@ -114,7 +115,7 @@ class Arr
      *
      * @return bool
      */
-    public static function exists($value, array $array, $strict = false): bool
+    public function exists($value, array $array, $strict = false): bool
     {
         return in_array($value, $array, $strict);
     }
@@ -129,15 +130,15 @@ class Arr
      *
      * @return bool
      */
-    public static function keyExists($key, array $array, $caseSensitive = true): bool
+    public function keyExists($key, array $array, $caseSensitive = true): bool
     {
-        if ($caseSensitive === true || ! is_string($key)) {
+        if ($caseSensitive === true || ! \is_string($key)) {
             return key_exists($key, $array);
         }
 
-        $keys = self::keysLower($array);
+        $keys = $this->keysLower($array);
 
-        return self::exists(strtolower($key), array_keys($keys));
+        return $this->exists(strtolower($key), array_keys($keys));
     }
 
     /**
@@ -151,10 +152,10 @@ class Arr
      *
      * @return mixed|null
      */
-    public static function value($key, array $array, $otherKey = null)
+    public function value($key, array $array, $otherKey = null)
     {
-        return self::keyExists($key, $array) ? $array[$key]
-            : (self::keyExists($otherKey, $array) ? $array[$otherKey] : null);
+        return $this->keyExists($key, $array) ? $array[$key]
+            : ($this->keyExists($otherKey, $array) ? $array[$otherKey] : null);
     }
 
     /**
@@ -166,7 +167,7 @@ class Arr
      *
      * @return array
      */
-    public static function keys(array $array, $searchValue = null, bool $strict = false): array
+    public function keys(array $array, $searchValue = null, bool $strict = false): array
     {
         return $searchValue !== null ? array_keys($array, $searchValue, $strict) : array_keys($array);
     }
@@ -178,7 +179,7 @@ class Arr
      *
      * @return array
      */
-    public static function values(array $array): array
+    public function values(array $array): array
     {
         return array_values($array);
     }
@@ -190,9 +191,9 @@ class Arr
      *
      * @return array
      */
-    public static function toNumIndexed(array $array): array
+    public function toNumIndexed(array $array): array
     {
-        return self::values($array);
+        return $this->values($array);
     }
 
     /**
@@ -202,7 +203,7 @@ class Arr
      *
      * @return bool
      */
-    public static function isEmpty(array $array): bool
+    public function isEmpty(array $array): bool
     {
         return count($array) === 0;
     }
@@ -214,9 +215,9 @@ class Arr
      *
      * @return bool
      */
-    public static function isAssoc(array $array): bool
+    public function isAssoc(array $array): bool
     {
-        return ! self::isEmpty(array_filter(self::keys($array), 'is_string'));
+        return ! $this->isEmpty(array_filter($this->keys($array), 'is_string'));
     }
 
     /**
@@ -232,25 +233,25 @@ class Arr
      *
      * @return array
      */
-    public static function flip(array $array, bool $sort = false, bool $reverse = false, bool $sortByKeys = false): array
+    public function flip(array $array, bool $sort = false, bool $reverse = false, bool $sortByKeys = false): array
     {
         if ($sort !== false) {
             if ($sortByKeys === true) {
-                $keys = self::keys($array);
-                $reverse === false ? self::sort($keys) : self::sort($keys, true);
+                $keys = $this->keys($array);
+                $reverse === false ? $this->sort($keys) : $this->sort($keys, true);
                 $newArray = [];
                 foreach ($keys as $key) {
                     $newArray[$key] = $array[$key];
                 }
                 $array = $newArray;
             } else {
-                $reverse === false ? self::sort($array) : self::sort($array, true);
+                $reverse === false ? $this->sort($array) : $this->sort($array, true);
             }
         }
 
         // Only flip and integer values can be flipped
         $returnArray = array_map(function($value) {
-            return is_int($value) || is_string($value) ? $value : '';
+            return \is_int($value) || \is_string($value) ? $value : '';
         }, $array);
 
         return array_flip($returnArray);
@@ -263,11 +264,11 @@ class Arr
      *
      * @return StdClass
      */
-    public static function arrayToObject(array $array): StdClass
+    public function arrayToObject(array $array): StdClass
     {
         $jsonHelper = new Json();
 
-        return self::isAssoc($array) ? $jsonHelper->decode($jsonHelper->encode($array), false) : new StdClass();
+        return $this->isAssoc($array) ? $jsonHelper->decode($jsonHelper->encode($array), false) : new StdClass();
     }
 
     /**
@@ -277,7 +278,7 @@ class Arr
      *
      * @return array
      */
-    public static function objectToArray(object $object): array
+    public function objectToArray(object $object): array
     {
         $jsonHelper = new Json();
 
@@ -292,7 +293,7 @@ class Arr
      *
      * @return array
      */
-    public static function changeKeysCase(array $array, int $case = CASE_LOWER): array
+    public function changeKeysCase(array $array, int $case = CASE_LOWER): array
     {
         return array_change_key_case($array, $case);
     }
@@ -304,9 +305,9 @@ class Arr
      *
      * @return array
      */
-    public static function keysUpper(array $array): array
+    public function keysUpper(array $array): array
     {
-        return self::changeKeysCase($array, CASE_UPPER);
+        return $this->changeKeysCase($array, CASE_UPPER);
     }
 
     /**
@@ -316,9 +317,9 @@ class Arr
      *
      * @return array
      */
-    public static function keysLower(array $array): array
+    public function keysLower(array $array): array
     {
-        return self::changeKeysCase($array);
+        return $this->changeKeysCase($array);
     }
 
     /**
@@ -328,7 +329,7 @@ class Arr
      *
      * @return array
      */
-    public static function keysCapitalize(array $array): array
+    public function keysCapitalize(array $array): array
     {
         $returnArray = [];
         foreach ($array as $key => $value) {
@@ -344,9 +345,9 @@ class Arr
      * @param array $array
      * @param $key
      */
-    public static function remove(array &$array, $key): void
+    public function remove(array &$array, $key): void
     {
-        if (self::keyExists($key, $array)) {
+        if ($this->keyExists($key, $array)) {
             unset($array[$key]);
         }
     }
@@ -361,15 +362,15 @@ class Arr
      *
      * @return array
      */
-    public static function removeValues(array $array, array $valuesToRemove, bool $strict = false): array
+    public function removeValues(array $array, array $valuesToRemove, bool $strict = false): array
     {
         if ($strict === true) {
             return array_diff($array, $valuesToRemove);
         }
 
         foreach ($array as $key => $value) {
-            if (self::exists($value, $valuesToRemove)) {
-                self::remove($array, $key);
+            if ($this->exists($value, $valuesToRemove)) {
+                $this->remove($array, $key);
             }
         }
 
@@ -386,13 +387,13 @@ class Arr
      *
      * @return array
      */
-    public static function removeKeys(array $array, array $keysToRemove, bool $caseSensitive = true): array
+    public function removeKeys(array $array, array $keysToRemove, bool $caseSensitive = true): array
     {
         $keys = array_fill_keys($keysToRemove, 'REDLab');
 
         if ($caseSensitive === false) {
-            $keys = self::keysLower($keys);
-            $array = self::keysLower($array);
+            $keys = $this->keysLower($keys);
+            $array = $this->keysLower($array);
         }
 
         return array_diff_key($array, $keys);

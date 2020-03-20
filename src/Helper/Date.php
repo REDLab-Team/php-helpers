@@ -29,7 +29,7 @@ class Date
      * @return string
      * @throws \Exception
      */
-    public static function dateFromFormat(
+    public function dateFromFormat(
         ?DateTime $dateTime = null,
         string $format = self::STANDARD_DATETIME_FORMAT
     ): string
@@ -49,7 +49,7 @@ class Date
      *     * @return DateTime|null
      * @throws \Exception
      */
-    public static function stringToDateTime(
+    public function stringToDateTime(
         ?string $stringDate = null,
         string $format = self::STANDARD_DATETIME_FORMAT,
         ?DateTimeZone $dateTimeZone = null
@@ -79,7 +79,7 @@ class Date
      *
      * @return string|null
      */
-    public static function dateTimeToString(
+    public function dateTimeToString(
         ?DateTime $dateTime,
         string $format = self::STANDARD_DATETIME_FORMAT,
         bool $nullable = true,
@@ -107,7 +107,7 @@ class Date
      * @return bool
      * @throws \Exception
      */
-    public static function isDateInInterval(
+    public function isDateInInterval(
         ?DateTime $dateToCompare = null,
         ?DateTime $startDate = null,
         ?DateTime $endDate = null
@@ -134,7 +134,7 @@ class Date
      * @return bool
      * @throws \Exception
      */
-    public static function isDateBefore(?DateTime $dateToCompare = null, ?DateTime $dateEnd = null): bool
+    public function isDateBefore(?DateTime $dateToCompare = null, ?DateTime $dateEnd = null): bool
     {
         return $dateToCompare !== null && $dateToCompare < ($dateEnd ?? new DateTime());
     }
@@ -149,7 +149,7 @@ class Date
      * @return bool
      * @throws \Exception
      */
-    public static function isDateAfter(?DateTime $dateToCompare = null, ?DateTime $dateStart = null): bool
+    public function isDateAfter(?DateTime $dateToCompare = null, ?DateTime $dateStart = null): bool
     {
         return $dateToCompare !== null && $dateToCompare > ($dateStart ?? new DateTime());
     }
@@ -163,12 +163,12 @@ class Date
      * @return string
      * @throws \Exception
      */
-    public static function currentDateAsString(
+    public function currentDateAsString(
         string $format = self::STANDARD_DATETIME_FORMAT,
         ?DateTimeZone $dateTimeZone = null
     ): string
     {
-        return self::dateTimeToString(new DateTime(), $format, true, $dateTimeZone);
+        return $this->dateTimeToString(new DateTime(), $format, true, $dateTimeZone);
     }
 
     /**
@@ -183,9 +183,9 @@ class Date
      * @return int
      * @throws \Exception
      */
-    public static function currentDayOfYear(?DateTime $dateTime = null, bool $humanReading = false): int
+    public function currentDayOfYear(?DateTime $dateTime = null, bool $humanReading = false): int
     {
-        $currentDay = (int) self::dateTimeToString($dateTime,self::CURRENT_YEAR_DAY);
+        $currentDay = (int) $this->dateTimeToString($dateTime,self::CURRENT_YEAR_DAY);
 
         return $humanReading ? ++$currentDay : $currentDay;
     }
@@ -200,9 +200,9 @@ class Date
      *
      * @throws \Exception
      */
-    public static function isWeekEnd(?DateTime $dateTime = null): bool
+    public function isWeekEnd(?DateTime $dateTime = null): bool
     {
-        $currentDay = self::dateTimeToString($dateTime, self::WEEK_DAY_NUMBER);
+        $currentDay = $this->dateTimeToString($dateTime, self::WEEK_DAY_NUMBER);
 
         return (int) $currentDay > 5;
     }
@@ -216,9 +216,9 @@ class Date
      * @return bool
      * @throws \Exception
      */
-    public static function isLeapYear(?DateTime $dateTime = null): bool
+    public function isLeapYear(?DateTime $dateTime = null): bool
     {
-        $currentDay = self::dateTimeToString($dateTime, self::LEAP_YEAR);
+        $currentDay = $this->dateTimeToString($dateTime, self::LEAP_YEAR);
 
         return (bool) $currentDay;
     }

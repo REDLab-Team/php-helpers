@@ -11,9 +11,9 @@ class Str
      *
      * @return bool
      */
-    public static function isAlphaNumeric($value): bool
+    public function isAlphaNumeric($value): bool
     {
-        return is_scalar($value) && preg_match('/^[a-zA-Z0-9]+$/', $value) === 1;
+        return \is_scalar($value) && preg_match('/^[a-zA-Z0-9]+$/', $value) === 1;
     }
 
     /**
@@ -24,12 +24,14 @@ class Str
      *
      * @return bool
      */
-    public static function isBool(string $value, bool $strict = true): bool
+    public function isBool(string $value, bool $strict = true): bool
     {
         $boolValues = ['true', 'false', '1', '0'];
 
         $value = $strict === true ? strtolower($value) : $value;
 
-        return Arr::exists($value, $boolValues);
+        $arrayHelper = new Arr();
+
+        return $arrayHelper->exists($value, $boolValues);
     }
 }
