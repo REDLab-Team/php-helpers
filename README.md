@@ -3,6 +3,8 @@ These are some classes that aim to facilitate PHP developments and use less proc
 
 [![Latest Stable Version](https://img.shields.io/packagist/v/phpunit/phpunit.svg?style=flat-square)](https://packagist.org/packages/phpunit/phpunit)
 [![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.3-8892BF.svg?style=flat-square)](https://php.net/)
+[![Latest Stable Version](https://poser.pugx.org/redlab-team/php-helpers/v/stable)](https://packagist.org/packages/redlab-team/helpers-bundle)
+[![Total Downloads](https://poser.pugx.org/redlab-team/php-helpers/downloads)](https://packagist.org/packages/redlab-team/helpers-bundle)
 
 ## Installation
 ##### With composer :  
