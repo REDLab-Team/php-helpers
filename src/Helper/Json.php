@@ -107,6 +107,6 @@ class Json
      */
     public function hasError(): bool
     {
-        return $this->getLastErrorCode() === 0;
+        return $this->getLastErrorCode() !== 0;
     }
 }
