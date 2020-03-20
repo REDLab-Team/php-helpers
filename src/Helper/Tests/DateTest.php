@@ -48,7 +48,9 @@ class DateTest extends TestCase
      */
     public function testIsDateInInterval($dateToCompare, $startDate, $endDate)
     {
-        $this->assertIsBool(Date::isDateInInterval($dateToCompare, $startDate, $endDate));
+        $dateHelper = new Date();
+
+        $this->assertIsBool($dateHelper->isDateInInterval($dateToCompare, $startDate, $endDate));
     }
 
     /**
@@ -61,7 +63,9 @@ class DateTest extends TestCase
      */
     public function testIsDateBefore($dateToCompare, $endDate)
     {
-        $this->assertIsBool(Date::isDateBefore($dateToCompare, $endDate));
+        $dateHelper = new Date();
+
+        $this->assertIsBool($dateHelper->isDateBefore($dateToCompare, $endDate));
     }
 
     /**
@@ -74,7 +78,9 @@ class DateTest extends TestCase
      */
     public function testIsDateAfter($dateToCompare, $startDate)
     {
-        $this->assertIsBool(Date::isDateAfter($dateToCompare, $startDate));
+        $dateHelper = new Date();
+
+        $this->assertIsBool($dateHelper->isDateAfter($dateToCompare, $startDate));
     }
 
     /**
@@ -104,7 +110,12 @@ class DateTest extends TestCase
      */
     public function testCurrentDayOfYear($dateToTest)
     {
-        $this->assertSame(Date::currentDayOfYear($dateToTest) + 1, Date::currentDayOfYear($dateToTest, true));
+        $dateHelper = new Date();
+
+        $this->assertSame(
+            $dateHelper->currentDayOfYear($dateToTest) + 1,
+            $dateHelper->currentDayOfYear($dateToTest, true)
+        );
     }
 
     /**
@@ -116,7 +127,9 @@ class DateTest extends TestCase
      */
     public function testIsWeekEnd($dateToTest)
     {
-        $this->assertIsBool(Date::isWeekEnd($dateToTest));
+        $dateHelper = new Date();
+
+        $this->assertIsBool($dateHelper->isWeekEnd($dateToTest));
     }
 
     /**
@@ -128,6 +141,8 @@ class DateTest extends TestCase
      */
     public function testIsLeapYear($dateToTest)
     {
-        $this->assertIsBool(Date::isLeapYear($dateToTest));
+        $dateHelper = new Date();
+
+        $this->assertIsBool($dateHelper->isLeapYear($dateToTest));
     }
 }

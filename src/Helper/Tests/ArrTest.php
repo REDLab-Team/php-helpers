@@ -61,7 +61,9 @@ class ArrTest extends TestCase
      */
     public function testIsEmpty(array $arrayToTest)
     {
-        $this->assertIsBool(Arr::isEmpty($arrayToTest));
+        $arrayHelper = new Arr();
+
+        $this->assertIsBool($arrayHelper->isEmpty($arrayToTest));
     }
 
     /**
@@ -74,7 +76,9 @@ class ArrTest extends TestCase
      */
     public function testIsAssoc(array $arrayToTest)
     {
-        $this->assertIsBool(Arr::isAssoc($arrayToTest));
+        $arrayHelper = new Arr();
+
+        $this->assertIsBool($arrayHelper->isAssoc($arrayToTest));
     }
 
     /**
@@ -88,14 +92,16 @@ class ArrTest extends TestCase
      */
     public function testFirst(array $arrayToTest)
     {
-        if (! Arr::isEmpty($arrayToTest)) {
+        $arrayHelper = new Arr();
+
+        if (! $arrayHelper->isEmpty($arrayToTest)) {
             // first value
-            $this->assertSame(Arr::first($arrayToTest), reset($arrayToTest));
+            $this->assertSame($arrayHelper->first($arrayToTest), reset($arrayToTest));
             // first key
-            $this->assertSame(Arr::first($arrayToTest, true), array_key_first($arrayToTest));
+            $this->assertSame($arrayHelper->first($arrayToTest, true), array_key_first($arrayToTest));
         } else {
-            $this->assertNull(Arr::first($arrayToTest));
-            $this->assertNull(Arr::first($arrayToTest));
+            $this->assertNull($arrayHelper->first($arrayToTest));
+            $this->assertNull($arrayHelper->first($arrayToTest));
         }
     }
 
@@ -110,14 +116,16 @@ class ArrTest extends TestCase
      */
     public function testLast(array $arrayToTest)
     {
-        if (! Arr::isEmpty($arrayToTest)) {
+        $arrayHelper = new Arr();
+
+        if (! $arrayHelper->isEmpty($arrayToTest)) {
             // first value
-            $this->assertSame(Arr::last($arrayToTest), end($arrayToTest));
+            $this->assertSame($arrayHelper->last($arrayToTest), end($arrayToTest));
             // first key
-            $this->assertSame(Arr::last($arrayToTest, true), array_key_last($arrayToTest));
+            $this->assertSame($arrayHelper->last($arrayToTest, true), array_key_last($arrayToTest));
         } else {
-            $this->assertNull(Arr::last($arrayToTest));
-            $this->assertNull(Arr::last($arrayToTest));
+            $this->assertNull($arrayHelper->last($arrayToTest));
+            $this->assertNull($arrayHelper->last($arrayToTest));
         }
     }
 
@@ -131,8 +139,10 @@ class ArrTest extends TestCase
      */
     public function testSort(array $arrayToTest)
     {
-        $this->assertTrue(Arr::sort($arrayToTest));
-        $this->assertTrue(Arr::sort($arrayToTest, true));
+        $arrayHelper = new Arr();
+
+        $this->assertTrue($arrayHelper->sort($arrayToTest));
+        $this->assertTrue($arrayHelper->sort($arrayToTest, true));
     }
 
     /**
@@ -145,14 +155,16 @@ class ArrTest extends TestCase
      */
     public function testAdd(array $arrayToTest)
     {
+        $arrayHelper = new Arr();
+
         $valueToAdd =  'Value to Add';
         $valueToAdd2 = 'Value to Add 2';
 
-        $this->assertIsInt(Arr::add($arrayToTest, $valueToAdd));
-        $this->assertSame(Arr::first($arrayToTest), $valueToAdd);
+        $this->assertIsInt($arrayHelper->add($arrayToTest, $valueToAdd));
+        $this->assertSame($arrayHelper->first($arrayToTest), $valueToAdd);
 
-        $this->assertIsInt(Arr::add($arrayToTest, $valueToAdd2, false));
-        $this->assertSame(Arr::last($arrayToTest), $valueToAdd2);
+        $this->assertIsInt($arrayHelper->add($arrayToTest, $valueToAdd2, false));
+        $this->assertSame($arrayHelper->last($arrayToTest), $valueToAdd2);
     }
 
     /**
@@ -165,10 +177,12 @@ class ArrTest extends TestCase
      */
     public function testExists(array $arrayToTest)
     {
+        $arrayHelper = new Arr();
+
         $valueToTest =  'Value to test';
 
-        $this->assertIsBool(Arr::exists($valueToTest, $arrayToTest));
-        $this->assertIsBool(Arr::exists($valueToTest, $arrayToTest, true));
+        $this->assertIsBool($arrayHelper->exists($valueToTest, $arrayToTest));
+        $this->assertIsBool($arrayHelper->exists($valueToTest, $arrayToTest, true));
     }
 
     /**
@@ -181,13 +195,15 @@ class ArrTest extends TestCase
      */
     public function testKeyExists(array $arrayToTest)
     {
+        $arrayHelper = new Arr();
+
         $keyToTest  = 0;
         $keyToTest2 = 'KeyToTest';
 
-        $this->assertIsBool(Arr::keyExists($keyToTest, $arrayToTest));
-        $this->assertIsBool(Arr::keyExists($keyToTest, $arrayToTest, true));
-        $this->assertIsBool(Arr::keyExists($keyToTest2, $arrayToTest));
-        $this->assertIsBool(Arr::keyExists($keyToTest2, $arrayToTest, true));
+        $this->assertIsBool($arrayHelper->keyExists($keyToTest, $arrayToTest));
+        $this->assertIsBool($arrayHelper->keyExists($keyToTest, $arrayToTest, true));
+        $this->assertIsBool($arrayHelper->keyExists($keyToTest2, $arrayToTest));
+        $this->assertIsBool($arrayHelper->keyExists($keyToTest2, $arrayToTest, true));
     }
 
     /**
@@ -200,11 +216,13 @@ class ArrTest extends TestCase
      */
     public function testGetKeys(array $arrayToTest)
     {
+        $arrayHelper = new Arr();
+
         $searchValues = 0;
-        $this->assertIsArray(Arr::keys($arrayToTest));
-        $this->assertIsArray(Arr::keys($arrayToTest, $searchValues));
-        $this->assertIsArray(Arr::keys($arrayToTest, $searchValues, true));
-        $this->assertIsArray(Arr::keys($arrayToTest, null, true));
+        $this->assertIsArray($arrayHelper->keys($arrayToTest));
+        $this->assertIsArray($arrayHelper->keys($arrayToTest, $searchValues));
+        $this->assertIsArray($arrayHelper->keys($arrayToTest, $searchValues, true));
+        $this->assertIsArray($arrayHelper->keys($arrayToTest, null, true));
     }
 
     /**
@@ -217,8 +235,10 @@ class ArrTest extends TestCase
      */
     public function testGetValues(array $arrayToTest)
     {
-        $this->assertIsArray(Arr::values($arrayToTest));
-        $this->assertIsArray(Arr::toNumIndexed($arrayToTest));
+        $arrayHelper = new Arr();
+
+        $this->assertIsArray($arrayHelper->values($arrayToTest));
+        $this->assertIsArray($arrayHelper->toNumIndexed($arrayToTest));
     }
 
     /**
@@ -231,9 +251,11 @@ class ArrTest extends TestCase
      */
     public function testFlip(array $arrayToTest)
     {
-        $flippedArray = Arr::flip($arrayToTest);
+        $arrayHelper = new Arr();
+
+        $flippedArray = $arrayHelper->flip($arrayToTest);
         $this->assertIsArray($flippedArray);
-        $this->assertSame(Arr::keys($arrayToTest), Arr::values($flippedArray));
+        $this->assertSame($arrayHelper->keys($arrayToTest), $arrayHelper->values($flippedArray));
     }
 
     /**
@@ -246,7 +268,9 @@ class ArrTest extends TestCase
      */
     public function testToObject(array $arrayToTest)
     {
-        $this->assertIsObject(Arr::arrayToObject($arrayToTest));
+        $arrayHelper = new Arr();
+
+        $this->assertIsObject($arrayHelper->arrayToObject($arrayToTest));
     }
 
     /**
@@ -260,10 +284,12 @@ class ArrTest extends TestCase
      */
     public function testObjectArrays(array $arrayToTest)
     {
-        $this->assertIsArray(Arr::sortObjectsArrayByAttribute($arrayToTest, 'robert'));
-        $this->assertIsArray(Arr::sortObjectsArrayByAttribute($arrayToTest, 'robert', true));
-        $this->assertIsArray(Arr::sortObjectsArrayByAttribute($arrayToTest, 'simone'));
-        $this->assertIsArray(Arr::sortObjectsArrayByAttribute($arrayToTest, 'simone', true));
+        $arrayHelper = new Arr();
+
+        $this->assertIsArray($arrayHelper->sortObjectsArrayByAttribute($arrayToTest, 'robert'));
+        $this->assertIsArray($arrayHelper->sortObjectsArrayByAttribute($arrayToTest, 'robert', true));
+        $this->assertIsArray($arrayHelper->sortObjectsArrayByAttribute($arrayToTest, 'simone'));
+        $this->assertIsArray($arrayHelper->sortObjectsArrayByAttribute($arrayToTest, 'simone', true));
     }
 
     /**
@@ -275,8 +301,10 @@ class ArrTest extends TestCase
      */
     public function testObjectToArray(array $arrayToTest)
     {
+        $arrayHelper = new Arr();
+
         foreach ($arrayToTest as $object) {
-            $this->assertIsArray(Arr::objectToArray($object));
+            $this->assertIsArray($arrayHelper->objectToArray($object));
         }
     }
 }
